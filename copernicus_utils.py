@@ -34,6 +34,7 @@ from datetime import tzinfo, datetime, time
 # Define useful function
 # ------------------------------------------------------------------------------
 def in_interval(seq,xmin,xmax):
+"""Select part of sequence that lies in a given interval [xmin,xmax[ """
     for i, x in enumerate(seq):
         if x>=xmin and x<xmax:
             yield i
@@ -42,6 +43,7 @@ def in_interval(seq,xmin,xmax):
 # Get history from NetCDF file
 # ------------------------------------------------------------------------------
 def get_history(ncfile):
+"""Get history attribute from NetCDF file. """
 
     user = getpass.getuser()
     print(user)
@@ -59,7 +61,7 @@ def get_history(ncfile):
 # Update global attributes - institution and references
 # ------------------------------------------------------------------------------
 def update_metadata(ncfile):
-
+"""Update metadata in NetCDF file to reflect processing carried out."""
     user = getpass.getuser()
     print(user)
 
@@ -83,7 +85,7 @@ def update_metadata(ncfile):
 
     history = updttimestr + (" - user:" + user
     + " machine: " + socket.gethostname()
-    + " program: kepler_utils.py update_metadata"
+    + " program: copernicus_utils.py update_metadata"
     + " version:" + str(module_version))
 
     nc.history += "\n" + history
@@ -94,7 +96,7 @@ def update_metadata(ncfile):
 # Update global attributes - institution and references
 # ------------------------------------------------------------------------------
 def update_metadata_cfradial(cfradfile):
-
+"""Update metadata in CFradial file."""
     user = getpass.getuser()
     print(user)
 
@@ -462,7 +464,7 @@ def read_copernicus(filename, **kwargs):
 # Define function to produce cfradial files from mmclx files
 # ------------------------------------------------------------------------
 def copernicus2cfradial(rawfile):
-
+"""Convert Copernicus Chilbolton NetCDF format to CFRadial."""
     user = getpass.getuser()
 
     print('Opening NetCDF Copernicus raw file ' + ncfile)
@@ -487,7 +489,7 @@ def copernicus2cfradial(rawfile):
 
     history = proctimestr + (" - user:" + user
     + " machine: " + socket.gethostname()
-    + " program: kepler_utils.py create_cfradial_file"
+    + " program: copernicus_utils.py create_cfradial_file"
     + " version:" + str(module_version))
 
     nc1 = nc4.Dataset(cfradfile,'r+',format='NETCDF4')
@@ -505,7 +507,7 @@ def copernicus2cfradial(rawfile):
 # Quicklook generation
 # ------------------------------------------------------------------------------
 def make_quicklooks(ncfile,figpath):
-
+"""Make quicklooks"""
     user = getpass.getuser()
 
     Figurename=ncfile.replace(".nc",".png");
